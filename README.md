@@ -176,7 +176,7 @@ Python 3.8.3
 * 重み行列とVの行列積を計算→Attentionの出力行列  
 ※各行が、該当する行位置のQueryから得られたValueの重み付け和ベクトルに該当
 
-<img style="margin-left:2em;" src="https://latex.codecogs.com/gif.latex?{\rm Attention}(Q,K,V) = {\rm softmax}(\frac{QK^T}{\sqrt{d_k}})V" />
+![math1](img/math1.png)
 
 * $d_k$：QueryとKeyの次元数
 
@@ -193,10 +193,7 @@ Python 3.8.3
 * 各headへの入力の際、Q, K, Vに対して線形変換処理を行い次元圧縮
 * 各headの出力を結合して線形変換をかけ、全体の出力とする
 
-<img style="margin-left:2em;" src="https://latex.codecogs.com/gif.latex?{\rm MultiHead}(Q,K,V) = {\rm Concat}({\rm head_1}, ..., {\rm head_h})W^O" />
-<br/>
-<img style="margin-left:2em;" src="https://latex.codecogs.com/gif.latex?{\rm where \ head_i} = {\rm Attention}(QW^Q_i, KW^K_i, VW^V_i)" />
-<br/><br/>
+![math2](img/math2.png)
 
 * 訓練時はこれらの線形変換の行列（$W^?_?$）を更新し、headにおいてQとK(V)間の依存関係を適切に獲得できるようにする。 
 * head毎に独立に訓練させることで、異なる特徴フィルタを獲得  
@@ -207,8 +204,7 @@ Python 3.8.3
 * RNN構造排除によって失われる位置情報を補う手法
 * 単語埋め込みベクトルに、次元毎に異なる周波数のsin関数、cos関数の値を足す
 
-<img style="margin-left:2em;" src="https://latex.codecogs.com/gif.latex?PE_{(pos, 2i)} = sin(pos/10000^{2i/d_{model}})" /><br/>
-<img style="margin-left:2em;" src="https://latex.codecogs.com/gif.latex?PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})" />
+![math3](img/math3.png)
 
 ※pos：文章中の単語の位置番号（＝行列の行番号）、i：単語埋め込みベクトルの次元番号、$d_{model}$：埋め込みベクトルの次元数
 
