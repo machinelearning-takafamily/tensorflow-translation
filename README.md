@@ -9,6 +9,8 @@
 PCとPython,Jupyter環境により動作させることができます。
 ソースファイルは、Githubに登録しておりますから、後日、ご自身でも体験していただきたく思います。
 
+<https://github.com/machinelearning-takafamily/tensorflow-translation>
+
 ## 自己紹介
 
 高橋 康 Yasushi Takahashi
@@ -30,19 +32,19 @@ Macbook pro 16 / Catalina
 ### IDE
 
 Microsoft Visual Studio Code 1.5.1.1
-https://azure.microsoft.com/ja-jp/products/visual-studio-code/
+<https://azure.microsoft.com/ja-jp/products/visual-studio-code/>
 
 ![vscode](img/vscode.png)
 
 ### 言語
 
 Python 3.8.3
-https://www.python.org/downloads/
+<https://www.python.org/downloads/>
 
 ![python](img/python.png)
 
 > ANACONDAでも構いません
-> https://www.anaconda.com/products/individual
+> <https://www.anaconda.com/products/individual>
 
 
 ## 本題に入る前に補足知識から
@@ -80,7 +82,7 @@ https://www.python.org/downloads/
   - Softmax関数：入力されたベクトルに対して、その値の合計値が１になるように正規化する関数
 - 一番高い可能性が算出された単語を出力単語とする
 - 入力文の全単語の情報が一つの状態ベクトルに凝縮されてしまう課題がある。
-<img src="./img/encdec.png" width="75%">
+![posienc](./img/encdec.png)
 
 ### Attention
 
@@ -93,7 +95,7 @@ https://www.python.org/downloads/
 - Valueを重み付け和し(図のcontext vector)、Decoder中間層に与える
 - Valueの重み付け和とDecoder側の中間層の状態を元に出力単語を算出
 
-<img src="./img/attention.png" width="75%">
+![posienc](./img/attention.png)
 
 ## Transformer Abstract
 
@@ -120,7 +122,7 @@ https://www.python.org/downloads/
 
 ### 全体の構造
 
-<img src="./img/zentai.png" width="50%">
+![posienc](./img/zentai.png)
 
 - Encoder：左側の灰色のブロック
 - Decoder：右側の灰色のブロック
@@ -135,7 +137,7 @@ https://www.python.org/downloads/
 
 #### Scaled Dot-Product Attention
 
-<img src="./img/sdpa.png" width="30%">
+<img src="./img/sdpa2.png" width="70%">
 
 - TransformerにおけるAttentionの基本構造
 - Encoder-Decoderに組み込まれていたAttentionを、Encoder-Decoderから切り離して独立して使用。
@@ -144,19 +146,21 @@ https://www.python.org/downloads/
 - 正規化(Scaled)した上でsoftmax関数にかける→Vにかけられる重み行列を算出
 - 重み行列とVの行列積を計算→Attentionの出力行列  
 ※各行が、該当する行位置のQueryから得られたValueの重み付け和ベクトルに該当
+
 ```math
 {\rm Attention}(Q,K,V) = {\rm softmax}(\frac{QK^T}{\sqrt{d_k}})V
 ```
+
 - $d_k$：QueryとKeyの次元数
 
 - Self-Attentionでは、QとK(V)に同じ文章を与え、単一の文章同士で演算を行う  
 →当文章内の単語間の依存関係を獲得し、これを加味した特徴表現が出力行列となる。
-<img src="./img/selfattention.png" width="60%">
+<img src="./img/selfattention.png" width="90%">
 ※memoryはkey-valueに相当。丸の大きさが重みの大きさ
 
 #### Multi-Head Attention
 
-<img src="./img/mha.png" width="30%">
+<img src="./img/mha2.png" width="70%">
 
 - 小さな（=次元数の少ない）複数のAttention（headと呼ぶ）で並列に処理する
 - 各headへの入力の際、Q, K, Vに対して線形変換処理を行い次元圧縮
@@ -186,8 +190,8 @@ PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})
 ```
 
 ※pos：文章中の単語の位置番号（＝行列の行番号）、i：単語埋め込みベクトルの次元番号、$d_{model}$：埋め込みベクトルの次元数
-<img src="./img/posienc.png" width="75%">
 
+![posienc](./img/posienc.png)
 
 |pos|dim4|dim5|dim6|dim7|
 |----|----|----|----|----|
@@ -207,7 +211,8 @@ PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})
 - 各Queryに関して、文章中で自分より後ろに位置するKeyにかける重みを0にする  
 ※下図において、黒丸の部分を無視することに相当
 - 未来の情報（＝自分より後ろの単語の情報）が伝達されて予測に使用されるのを防ぐ
-<img src="./img/mask.png" width="60%">
+
+![posienc](./img/mask.png)
 
 #### Position-wise Feed Forward
 
@@ -227,7 +232,7 @@ PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})
 
 ### 処理の流れ
 
-<img src="./img/transformer.png" width="50%">
+<img src="./img/transformer.png" width="80%">
 
 #### Encoder
 
@@ -262,7 +267,8 @@ PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})
 ## Why Self-Attention
 
 下記の点でRNNやCNNよりも優れている
-<img src="./img/whyself.png" width="75%">
+![posienc](./img/whyself.png)
+
 ※n：文章の長さ（＝単語の数）、d：単語埋め込みベクトルの次元数、k：特徴フィルタのサイズ
 
 - Complexity per Layer：各層の計算複雑性
@@ -277,9 +283,10 @@ PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})
 ## Attention Visualizations
 
 Encoder側の５段目のSelt-Attention層を可視化
+
 ### figure 3
 
-<img src="./img/figure3.png" width="80%">
+![posienc](./img/figure3.png)
 
 - Query="making"に対して算出された全Headの注目度（＝重み）
 - more, difficultに強い注目  
@@ -287,7 +294,7 @@ Encoder側の５段目のSelt-Attention層を可視化
 
 ### figure 4
 
-<img src="./img/figure4.png" width="80%">
+![posienc](./img/figure4.png)
 
 - 上部：Head 5で算出された注目度全て
 - 下部：Head 5, 6で算出された、Query="its"に対する注目度  
@@ -295,7 +302,7 @@ Encoder側の５段目のSelt-Attention層を可視化
 
 ### figure 5
 
-<img src="./img/figure5.png" width="80%">
+![posienc](./img/figure5.png)
 
 - 上下で、異なる二つのHeadで算出された注目度全てを表示
 - 各Headで異なる特徴抽出→依存関係獲得がされていることがわかる
@@ -322,7 +329,7 @@ Encoder側の５段目のSelt-Attention層を可視化
 
 ### スコアと学習コストの比較
 
-<img src="./img/result.png" width="75%">
+![posienc](./img/result.png)
 
 - BLEU：機械翻訳の評価方法。予め用意した複数の正解訳との一致度を計算
 - FLOPS：訓練に費やされた計算量  
@@ -330,7 +337,7 @@ Encoder側の５段目のSelt-Attention層を可視化
 
 ### ハイパーパラメーターによる性能変化
 
-<img src="./img/hypara.png" width="75%">
+![posienc](./img/hypara.png)
 
 - $N$：EncoderとDecoderにおけるAttention+FeedForwordの繰り返し数
 - $d_{model}$ : 単語埋め込みベクトルの次元
@@ -344,7 +351,7 @@ Encoder側の５段目のSelt-Attention層を可視化
 
 ### 英語の構文解析への適用結果 
 
-<img src="./img/koubun.png" width="75%">
+![posienc](./img/koubun.png)
 
 - Transformerを4層重ねたモデルで訓練
 - 構文解析に特化したモデルでないにも関わらずトップクラスの性能を記録
