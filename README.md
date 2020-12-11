@@ -51,9 +51,11 @@ Oracle Cloud GPU Instance
 今回は、訓練時間の都合で、データセンタのサーバーを特別に利用しています。  
 クライアントだけでも、処理時間はかかりますが動作をさせることは可能です。
 
-CPU   : 6  
-MEMORY: 90GB  
-GPU   : NVIDIA Tesla V100  
+CPU : 6  
+MEMORY : 90GB  
+GPU : NVIDIA Tesla V100  
+NVIDIA UNIX x86_64 Kernel Module : 450.80.02
+CUDA Version: 10.1
 
 このサーバを利用しても、訓練時間が約１２分かかります。  
 そのため、訓練中は、休憩時間とさせていただきます。
