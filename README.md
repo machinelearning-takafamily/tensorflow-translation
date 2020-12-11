@@ -67,9 +67,8 @@ Python 3.8.3
 
 導入モジュール
 
-* jupyter@1.0.0
-* tensorflow-datasets@4.1.0  
 * jupyter@1.0.0  
+* tensorflow-datasets@4.1.0  
 * tensorflow@2.3.1  
 * matplotlib@3.3.3  
 * pandas@1.1.4  
